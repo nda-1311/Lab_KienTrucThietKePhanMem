@@ -30,11 +30,12 @@ async function startChat() {
   rl.on('line', async (input) => {
     await sendMessage(input);
 
+    // Đảm bảo không xác nhận tin nhắn test
     // Lắng nghe phản hồi từ queue_B (nhận tin từ Service 2)
     channel.consume(queueB, (msg) => {
       console.log('Service 1 received: ' + msg.content.toString());
       rl.prompt();
-    }, { noAck: true }); // Đảm bảo không xác nhận tin nhắn
+    }, { noAck: true }); // Đảm bảo không xác nhận tin nhắn test
   });
 
 }
