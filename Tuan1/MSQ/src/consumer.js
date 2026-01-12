@@ -9,6 +9,7 @@ async function startChat() {
   const queueB = 'queue_B'; 
 
   // Tạo queue nếu chưa có
+  // Tạo queue nếu chưa có
   await channel.assertQueue(queueA, { durable: false });
   await channel.assertQueue(queueB, { durable: false });
 
