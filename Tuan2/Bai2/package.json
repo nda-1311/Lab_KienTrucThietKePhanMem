@@ -1,0 +1,17 @@
+{
+  "name": "bai2",
+  "version": "1.0.0",
+  "description": "State, Strategy, Decorator Design Patterns Demo",
+  "main": "demo.js",
+  "scripts": {
+    "start": "node demo.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": ["design-pattern", "state", "strategy", "decorator"],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "mariadb": "^3.4.5"
+  }
+}
