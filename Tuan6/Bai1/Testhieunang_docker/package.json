@@ -1,0 +1,11 @@
+{
+  "name": "demo",
+  "version": "1.0.0",
+  "scripts": {
+    "build": "mkdir -p dist && cp index.js dist/index.js"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "nodemon": "^3.0.0"
+  }
+}
