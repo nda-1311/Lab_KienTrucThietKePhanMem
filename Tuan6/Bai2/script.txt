@@ -1,0 +1,99 @@
+-- ==============================
+-- 1. Tạo Database
+-- ==============================
+DROP DATABASE IF EXISTS spring_partition_demo;
+CREATE DATABASE spring_partition_demo;
+USE spring_partition_demo;
+
+-- ==============================
+-- 2. Horizontal Partition (chia theo gender)
+-- ==============================
+-- Table nam
+CREATE TABLE table_user_01 (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(50),
+    age INT,
+    gender ENUM('male') DEFAULT 'male'
+);
+
+-- Table nữ
+CREATE TABLE table_user_02 (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(50),
+    age INT,
+    gender ENUM('female') DEFAULT 'female'
+);
+
+-- Dữ liệu mẫu Horizontal
+INSERT INTO table_user_01 (name, age) VALUES 
+('Nguyen Van A', 25),
+('Tran Van B', 30);
+
+INSERT INTO table_user_02 (name, age) VALUES
+('Le Thi C', 22),
+('Pham Thi D', 28);
+
+-- ==============================
+-- 3. Vertical Partition (chia theo cột)
+-- ==============================
+-- Thông tin cá nhân
+CREATE TABLE user_personal (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(50),
+    age INT
+);
+
+-- Thông tin account
+CREATE TABLE user_account (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT,
+    username VARCHAR(50),
+    password VARCHAR(100),
+    FOREIGN KEY (user_id) REFERENCES user_personal(id)
+);
+
+-- Dữ liệu mẫu Vertical
+INSERT INTO user_personal (name, age) VALUES 
+('Nguyen Van A', 25),
+('Le Thi C', 22);
+
+INSERT INTO user_account (user_id, username, password) VALUES
+(1, 'nguyenvana', '123456'),
+(2, 'lethic', 'abcdef');
+
+-- ==============================
+-- 4. Functional Partition (chia theo chức năng)
+-- ==============================
+-- Orders
+CREATE TABLE orders (
+    order_id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT,
+    total DECIMAL(10,2)
+);
+
+-- Payments
+CREATE TABLE payments (
+    payment_id INT AUTO_INCREMENT PRIMARY KEY,
+    order_id INT,
+    amount DECIMAL(10,2)
+);
+
+-- Shipping
+CREATE TABLE shipping (
+    shipping_id INT AUTO_INCREMENT PRIMARY KEY,
+    order_id INT,
+    address VARCHAR(200)
+);
+
+-- Dữ liệu mẫu Functional
+INSERT INTO orders (user_id, total) VALUES
+(1, 500.00),
+(2, 300.00);
+
+INSERT INTO payments (order_id, amount) VALUES
+(1, 500.00),
+(2, 300.00);
+
+INSERT INTO shipping (order_id, address) VALUES
+(1, '123 Le Loi, HCMC'),
+(2, '456 Nguyen Trai, HCMC');
